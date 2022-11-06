@@ -58,41 +58,55 @@ int main(int argc, char **argv){
 
     // Cria novo buffer para armazenar o dado
     char buf[BUFSZ];
-    // Inicializa o buffer com zero
-    memset(buf, 0, BUFSZ);
+    while (1){
+        // Inicializa o buffer com zero
+        memset(buf, 0, BUFSZ);
 
-    // Imprime no prompt
-    printf("mensagem> ");
-    // Recebe a mensagem via input do teclado
-    fgets(buf, BUFSZ-1, stdin);
-    // Envia para o socket "s" o buffer "buf" de tamanho 
-    // strlen(buf) acrescido do caracter /0 
-    size_t count = send(s, buf, strlen(buf)+1, 0);
-    // Se o número de bits transmitidos na rede (count) for
-    // diferente de strlen(buf)+1, houve erro no send
-    if (count != strlen(buf)+1){
-        // Se der algum erro, logexit e exibe a mensagem informando
-        // que saiu no send
-        logexit("send");
+        // Imprime no prompt
+        // printf("mensagem> ");
+        // Recebe a mensagem via input do teclado
+        fgets(buf, BUFSZ-1, stdin);
+        // Envia para o socket "s" o buffer "buf" de tamanho 
+        // strlen(buf) acrescido do caracter /0 
+        size_t count = send(s, buf, strlen(buf)+1, 0);
+        // Se o número de bits transmitidos na rede (count) for
+        // diferente de strlen(buf)+1, houve erro no send
+        if (count != strlen(buf)+1){
+            // Se der algum erro, logexit e exibe a mensagem informando
+            // que saiu no send
+            logexit("send");
+        }
+
+        // Não mover esse if
+        if(strcmp(buf, "exit\n") == 0){
+            close(s);
+            return 0;
+            exit(EXIT_SUCCESS);
     }
 
     // Inicializa o buffer com zero, agora para receber do servidor
     memset(buf, 0, BUFSZ);
+
     // Total de bits recebidos até o momento
     unsigned total = 0;
-    while (1){
-        count = recv(s, buf + total, BUFSZ - total, 0);
+        //count = recv(s, buf + total, BUFSZ - total, 0);
+        count = read(s, buf + total, BUFSIZ - total);
+        if(strcmp(buf, "exit\n") == 0){
+            close(s);
+            return 0;
+            exit(EXIT_SUCCESS);
+        }
         // Se não receber nada (isso significa que a conexão
         // está fechada)
         if (count == 0){
             break;
         }
         total += count;
+
+    //printf("received %u bytes\n", total);
+    puts(buf);    
     }
     close(s);
-
-    printf("received %u bytes\n", total);
-    puts(buf);
 
     exit(EXIT_SUCCESS);
 }
