@@ -1,0 +1,19 @@
+switch 01 02 installed
+switch 03 installed
+error rack limit exceeded
+error switch type unknown
+switch 01 removed from 01
+error switch 02 already installed in 01
+error switch doesn’t exist
+switch 02 removed from 01
+switch 03 removed from 01
+error rack limit exceeded
+switch 01 02 installed
+4300 Kbs 134 Kbs
+error switch doesn’t exist
+4131 Kbs
+01 02
+error rack doesn't exist
+switch 01 removed from 01
+switch 02 removed from 01
+empty rack

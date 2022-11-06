@@ -1,0 +1,20 @@
+add sw 01 02 in 01
+add sw 03 in 01
+add sw 01 in 01
+add sw 05 in 01
+rm sw 01 in 01
+add sw 02 in 01
+rm sw 01 in 01
+rm sw 02 in 01
+rm sw 03 in 01
+add sw 01 02 03 04 in 01
+add sw 01 02 in 01
+get 01 02 in 01
+get 03 in 01
+get 02 in 01
+ls 01
+ls 05
+rm sw 01 in 01
+rm sw 02 in 01
+ls 01
+exit
